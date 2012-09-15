@@ -104,30 +104,22 @@ at all opened files and at `vc-git-auto-commit-list'."
 is either a repo whose root is in `vc-git-auto-commit-list' or a
 repo with a file .autocommit or .auto-commit in its root or a
 repo with core.autocommit git setting set to true."
-  (dolist (repo (vc-git-list-all-auto-committed-repos))
-    (let ((default-directory repo))
-      (vc-git-commit-all))))
-
-;; (mapc
-;;  (lambda (path)
-;;    (let ((default-directory path))
-;;      (vc-git-commit-all)))
-;;  (delete
-;;   nil
-;;   (delete-dups
-;;    (append
-;;     vc-git-auto-commit-list
-;;     (mapcar
-;;      (lambda (buffer)
-;;        (let* ((file (buffer-file-name buffer))
-;;               (default-directory (and file (vc-git-root file))))
-;;          (if (vc-git-auto-committed-repo-p default-directory)
-;;              default-directory)))
-;;      (buffer-list))))))
+  (let ((repos (vc-git-list-all-auto-committed-repos))
+        repo)
+    (while (and
+            (setq repo (pop repos))
+            (condition-case err
+                (let ((default-directory repo))
+                  (vc-git-commit-all) t)
+              (error (yes-or-no-p
+                      (format "An error occurred on repo %s: %s; Exit anyway?"
+                              repo err))))))
+    ;; return nil if repo not nil ie an error occurred and answer is no
+    (not repo)))
 
 (global-set-key (kbd "C-x v C") 'vc-git-commit-all)
 
-(add-to-list 'kill-emacs-hook 'vc-git-auto-commit-repos)
+(add-to-list 'kill-emacs-query-functions 'vc-git-auto-commit-repos)
 
 (provide 'vc-git-commit-all)
 
