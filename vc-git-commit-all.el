@@ -59,11 +59,12 @@ commit message."
     (vc-git-command t 0 nil "status" "--porcelain")
     (if (zerop (buffer-size (current-buffer)))
         (message "Nothing to commit in repo %s" default-directory)
-      (message "Auto-committing repo %s" default-directory)
+      (message "Auto-committing repo %s..." default-directory)
       (vc-git-command nil 0 nil "add" "-A" ".")
       (vc-git-command nil 0 nil "commit" "-m"
                       (if arg (read-string "Commit message: ")
-                        (funcall vc-git-commit-msg-function))))))
+                        (funcall vc-git-commit-msg-function)))
+      (message "Auto-committing repo %s...done" default-directory))))
 
 
 (defun vc-git-auto-committed-repo-p (&optional root-dir)
