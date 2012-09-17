@@ -43,7 +43,7 @@
 (defun vc-git-commit-msg ()
   "Return default commit message."
   (with-temp-buffer
-    (insert (current-time-string))
+    (insert (current-time-string) "\n")
     (vc-git-command t t nil
                     "diff-index" "--name-status"
                     "HEAD")
