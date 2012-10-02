@@ -3,7 +3,7 @@
 ;; Copyright (C) 2012 Sylvain Rousseau <thisirs at gmail dot com>
 
 ;; Author: Sylvain Rousseau <thisirs at gmail dot com>
-;; Keywords: vc, convenience
+;; Keywords: vc, convenience, git
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -66,6 +66,11 @@ commit message."
                         (funcall vc-git-commit-msg-function)))
       (message "Auto-committing repo %s...done" default-directory))))
 
+(defun vc-git-auto-committed-p (&optional file)
+  "Returns t if file FILE is in an auto-committed repository."
+  (setq file (or file (buffer-file-name)))
+  (and (vc-git-root file)
+       (vc-git-auto-committed-repo-p (vc-git-root file))))
 
 (defun vc-git-auto-committed-repo-p (&optional root-dir)
   "Tests if ROOT-DIR is the root directory of an auto-committed
