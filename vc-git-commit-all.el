@@ -84,8 +84,9 @@ git repository."
          (expand-file-name ".autocommit" root-dir))
         (with-temp-buffer
           (and
-           (zerop (vc-git-command t 1 nil
-                                  "config" "--bool" "--get" "core.autocommit"))
+           (let ((default-directory root-dir))
+             (zerop (vc-git-command t 1 nil
+                                    "config" "--bool" "--get" "core.autocommit")))
            (string-match "true" (buffer-string)))))))
 
 (defun vc-git-list-all-auto-committed-repos ()
