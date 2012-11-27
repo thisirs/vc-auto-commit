@@ -78,7 +78,8 @@ commit message."
 
 (defun vc-git-auto-committed-repo-p (&optional root-dir)
   "Tests if ROOT-DIR is the root directory of an auto-committed
-git repository."
+git repository. If ROOT-DIR is omitted, it defaults to
+`default-directory'."
   (setq root-dir (or root-dir default-directory))
   (and root-dir
        (or
