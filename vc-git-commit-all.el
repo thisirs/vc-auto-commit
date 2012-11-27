@@ -62,7 +62,11 @@ commit message."
       (message "Auto-committing repo %s..." default-directory)
       (vc-git-command nil 0 nil "add" "-A" ".")
       (vc-git-command nil 0 nil "commit" "-m"
-                      (if arg (read-string "Commit message: ")
+                      (if arg
+                          (let ((msg (read-string "Commit message: ")))
+                            (if (equal msg "")
+                                (funcall vc-git-commit-msg-function)
+                              msg))
                         (funcall vc-git-commit-msg-function)))
       (message "Auto-committing repo %s...done" default-directory))))
 
