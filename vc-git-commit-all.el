@@ -82,6 +82,7 @@ git repository. If ROOT-DIR is omitted, it defaults to
 `default-directory'."
   (setq root-dir (or root-dir default-directory))
   (and root-dir
+       (file-exists-p root-dir)
        (or
         (file-exists-p
          (expand-file-name ".auto-commit" root-dir))
