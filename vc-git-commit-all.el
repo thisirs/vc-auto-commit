@@ -132,7 +132,7 @@ repo with core.autocommit git setting set to true."
 
 (global-set-key (kbd "C-x v C") 'vc-git-commit-all)
 
-(add-to-list 'kill-emacs-query-functions 'vc-git-auto-commit-repos)
+(add-to-list 'kill-emacs-query-functions 'vc-git-auto-commit-repos t)
 
 (provide 'vc-git-commit-all)
 
