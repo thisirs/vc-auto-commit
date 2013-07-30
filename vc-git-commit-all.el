@@ -125,7 +125,7 @@ repo with core.autocommit git setting set to true."
                 (let ((default-directory repo))
                   (vc-git-commit-all) t)
               (error (yes-or-no-p
-                      (format "An error occurred on repo %s: %s; Exit anyway?"
+                      (format "An error occurred when auto-committing repo %s: %s; Exit anyway?"
                               repo err))))))
     ;; return nil if repo not nil ie an error occurred and answer is no
     (not repo)))
