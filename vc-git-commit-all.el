@@ -49,6 +49,7 @@
                     "HEAD")
     (buffer-string)))
 
+;;;###autoload
 (defun vc-git-commit-all (&optional arg)
   "Commit all changes of `default-directory' repository. If used
 with \\[prefix-argument], the user is asked for a commit message.
