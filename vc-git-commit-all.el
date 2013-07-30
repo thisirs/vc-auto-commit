@@ -1,6 +1,6 @@
 ;;; vc-git-commit-all.el --- Auto-committing tool for Git
 
-;; Copyright (C) 2012 Sylvain Rousseau <thisirs at gmail dot com>
+;; Copyright (C) 2012-2013 Sylvain Rousseau <thisirs at gmail dot com>
 
 ;; Author: Sylvain Rousseau <thisirs at gmail dot com>
 ;; Keywords: vc, convenience, git
