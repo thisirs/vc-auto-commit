@@ -130,9 +130,12 @@ repo with core.autocommit git setting set to true."
     ;; return nil if repo not nil ie an error occurred and answer is no
     (not repo)))
 
-(global-set-key (kbd "C-x v C") 'vc-git-commit-all)
-
-(add-to-list 'kill-emacs-query-functions 'vc-git-auto-commit-repos t)
+;;;###autoload
+(defun vc-git-auto-commit-activate (&optional arg)
+  (interactive "P")
+  (if (< (prefix-numeric-value arg) 0)
+      (remove-hook 'kill-emacs-query-functions 'vc-git-auto-commit-repos)
+    (add-hook 'kill-emacs-query-functions 'vc-git-auto-commit-repos)))
 
 (provide 'vc-git-commit-all)
 
