@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec emacs -Q --no-site-lisp --script \
+    "$(dirname $0)/vc-auto-commit-testrunner.el" "$@"
