@@ -58,7 +58,7 @@ repository and BACKEND its backend."
   (let (result)
     (dolist (buffer (buffer-list) result)
       (let ((backend (vc-auto-commit-backend buffer)))
-        (when backend
+        (when (and backend (not (assoc (car backend) result)))
           (push backend result))))
     result))
 
