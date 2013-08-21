@@ -122,7 +122,7 @@ nil."
       (progn
         (remove-hook 'kill-emacs-query-functions 'vc-auto-commit-all)
         (message "Auto-committing disabled"))
-    (add-hook 'kill-emacs-query-functions 'vc-auto-commit-all)
+    (add-hook 'kill-emacs-query-functions 'vc-auto-commit-all t)
     (message "Auto-committing enabled")))
 
 (provide 'vc-auto-commit)
