@@ -5,7 +5,7 @@
 ;; Author: Sylvain Rousseau <thisirs at gmail dot com>
 ;; Maintainer: Sylvain Rousseau <thisirs at gmail dot com>
 ;; URL: http://github.com/thisirs/vc-auto-commit.git
-;; Keywords: vc, convenience, git
+;; Keywords: vc, convenience
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,17 @@
 ;; a repository. It is useful when you have a project that needs to be
 ;; put under a version control system but you don't want to write
 ;; any commit message.
+
+;;; Installation:
+
+;; Just put the following in your `.emacs`:
+
+;; (require 'vc-auto-commit)
+
+;; If you want to auto-commit all repositories when quitting emacs,
+;; add this:
+
+;; (vc-auto-commit-activate)
 
 ;;; Code
 

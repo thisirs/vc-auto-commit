@@ -1,4 +1,4 @@
-;;; vc-git-auto-commit.el ---
+;;; vc-git-auto-commit.el --- Auto-commit feature for git
 
 ;; Copyright (C) 2013 Sylvain Rousseau
 
@@ -22,7 +22,8 @@
 
 ;;; Commentary
 
-;;
+;; This library implements auto-commit feature for git-controlled
+;; repositories.
 
 ;;; Code
 
