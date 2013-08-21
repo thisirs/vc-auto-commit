@@ -21,8 +21,8 @@ this:
 ```
 
 You can auto-commit current repository, marked for auto-committing or
-not, with <kbd>M-x vc-auto-commit</kbd> or auto-commit all
-repositories marked for auto-committing with <kbd>M-x
-vc-auto-commit-all</kbd>. Repositories are marked for auto-committing
-with the variable `vc-auto-commit-repository` or the local variable
-`vc-auto-commit`.
+not, with <kbd>M-x</kbd>`vc-auto-commit` or auto-commit all
+repositories marked for auto-committing with
+<kbd>M-x</kbd>`vc-auto-commit-all`. Repositories are marked for
+auto-committing with the variable `vc-auto-commit-repository` or the
+local variable `vc-auto-commit`.
