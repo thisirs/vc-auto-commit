@@ -33,11 +33,11 @@
 (defun vc-git-commit-msg (repo)
   "Return default commit message."
   (with-temp-buffer
-    (insert (current-time-string) "\n")
-    (vc-git-command t t repo
-                    "diff-index" "--name-status"
-                    "HEAD")
-    (buffer-string)))
+    (if (= 0 (vc-git-command t nil nil
+                             "diff-index" "--name-status"
+                             "HEAD"))
+        (concat (current-time-string) "\n\n" (buffer-string))
+      "First commit")))
 
 (defun vc-git-auto-commit (repo &optional messagep)
   "Auto-commit repository REPO and asks for a commit message if
