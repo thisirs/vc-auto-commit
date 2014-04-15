@@ -1,6 +1,6 @@
 ;;; vc-auto-commit-status-testrunner.el ---
 
-;; Copyright (C) 2013 Sylvain Rousseau
+;; Copyright (C) 2013-2014 Sylvain Rousseau
 
 ;; Author: Sylvain Rousseau <thisirs at gmail dot com>
 ;; Maintainer: Sylvain Rousseau <thisirs at gmail dot com>
