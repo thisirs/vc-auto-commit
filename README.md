@@ -7,22 +7,28 @@ message.
 
 ## Installation
 
-Just put the following in your `.emacs`:
+Install the ELPA package from MELPA with <kbd>M-x</kbd>
+`package-install` <kbd>RET</kbd> `vc-auto-commit` or put
+`vc-auto-commit.el` in you load path and require it somewhere in your
+`.emacs`.
 
 ```lisp
 (require 'vc-auto-commit)
 ```
 
-If you want to auto-commit all repositories when quitting emacs, add
-this:
-
+Then, to activate the auto-commiting feature:
 ```lisp
 (vc-auto-commit-activate)
 ```
 
-You can auto-commit current repository, marked for auto-committing or
-not, with <kbd>M-x</kbd>`vc-auto-commit` or auto-commit all
-repositories marked for auto-committing with
-<kbd>M-x</kbd>`vc-auto-commit-all`. Repositories are marked for
-auto-committing with the variable `vc-auto-commit-repository` or the
-local variable `vc-auto-commit`.
+## Settings
+
+A repository can be marked for auto-committing if its root is listed
+in `vc-auto-commit-repository` or if a buffer visiting a file
+belonging to that repository has a buffer-local value `vc-auto-commit`
+non-nil. This is typically done with a `dir-locals.el` file.
+
+You can auto-commit all repositories with `vc-auto-commit-all`. This
+is automatically done when quitting emacs. You can also force
+auto-committing a repository even if it is not marked as one with
+`vc-auto-commit`.
