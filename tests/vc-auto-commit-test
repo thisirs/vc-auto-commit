@@ -1,4 +1,9 @@
 #!/bin/sh
 
-exec emacs -Q --no-site-lisp --script \
+# In ansi-term $EMACS is 24.4.50.1 (term:0.96)...
+if [ ! -x "$EMACS" -o -z "$EMACS" ]; then
+    export EMACS=emacs
+fi
+
+exec "${EMACS}" -Q --no-site-lisp --script \
     "$(dirname $0)/vc-auto-commit-testrunner.el" "$@"
