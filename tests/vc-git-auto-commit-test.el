@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;;; Code
+;;; Code:
 
 (defvar vc-auto-commit-test-repository-list ()
   "List of repositories used in the tests.")

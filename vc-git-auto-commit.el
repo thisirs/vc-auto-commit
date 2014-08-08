@@ -25,7 +25,7 @@
 ;; This library implements auto-commit feature for git-controlled
 ;; repositories.
 
-;;; Code
+;;; Code:
 
 (defvar vc-git-commit-msg-function 'vc-git-commit-msg
   "Function that returns a commit message.")

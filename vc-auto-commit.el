@@ -38,7 +38,7 @@
 
 ;; (vc-auto-commit-activate)
 
-;;; Code
+;;; Code:
 
 (require 'vc)
 (require 'vc-git-auto-commit)
