@@ -57,10 +57,14 @@ is in a auto-committed repository.")
 (defun vc-auto-commit--responsible-backend (file)
   "Return (ROOT . BACKEND) if file is under a version controlled system.
 If not, return nil."
-  (catch 'found
-    (dolist (backend vc-handled-backends)
-      (let ((path (vc-call-backend backend 'responsible-p file)))
-        (if path (throw 'found (cons path backend)))))))
+  (let ((backend (vc-backend file)))
+    (if backend
+        (condition-case err
+            (cons (vc-call-backend backend 'root file) backend)
+          (vc-not-supported
+           (unless (eq (cadr err) 'root)
+             (signal (car err) (cdr err)))
+           nil)))))
 
 (defun vc-auto-commit--get-repositories ()
   "Return repositories marked for auto-committing as a list of
