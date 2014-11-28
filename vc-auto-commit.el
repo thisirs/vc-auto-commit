@@ -78,20 +78,18 @@ repository and BACKEND its backend."
     result))
 
 ;;;###autoload
-(defun vc-auto-commit (file &optional arg)
-  "Commit all changes of FILE's repository. If used with \\[prefix-argument],
-the user is asked for a commit message. Otherwise,
-`vc-<BACKEND>-commit-msg-function' is called to generate a commit
-message."
-  (interactive (list (or buffer-file-name default-directory) current-prefix-arg))
-  (let ((repo+backend (vc-auto-commit--responsible-backend file)))
-    (unless repo+backend
+(defun vc-auto-commit (repository &optional arg)
+  "Commit all changes of REPOSITORY. If used with
+\\[prefix-argument], the user is asked for a commit message.
+Otherwise, `vc-<BACKEND>-commit-msg-function' is called to
+generate a commit message."
+  (interactive (list default-directory current-prefix-arg))
+  (let ((backend (vc-responsible-backend repository)))
+    (unless backend
       (error "No backend found!"))
-    (let* ((repository (car repo+backend))
-           (backend (cdr repo+backend))
-           (commit-function
-            (intern (concat "vc-" (downcase (symbol-name backend))
-                            "-auto-commit"))))
+    (let ((commit-function
+           (intern (concat "vc-" (downcase (symbol-name backend))
+                           "-auto-commit"))))
       (if (not (fboundp commit-function))
           (error "Sorry, auto-committing is not implemented for %s" backend)
         (message "Auto-committing repository %s..." repository)
