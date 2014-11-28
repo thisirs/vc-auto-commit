@@ -79,10 +79,10 @@ repository and BACKEND its backend."
 
 ;;;###autoload
 (defun vc-auto-commit (file &optional arg)
-  "Commit all changes of REPOSITORY. If used with
-\\[prefix-argument], the user is asked for a commit message.
-Otherwise, `vc-<BACKEND>-commit-msg-function' is called to
-generate a commit message."
+  "Commit all changes of FILE's repository. If used with \\[prefix-argument],
+the user is asked for a commit message. Otherwise,
+`vc-<BACKEND>-commit-msg-function' is called to generate a commit
+message."
   (interactive (list (or buffer-file-name default-directory) current-prefix-arg))
   (let ((repo+backend (vc-auto-commit--responsible-backend file)))
     (unless repo+backend
