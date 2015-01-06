@@ -5,6 +5,7 @@
 ;; Author: Sylvain Rousseau <thisirs at gmail dot com>
 ;; Maintainer: Sylvain Rousseau <thisirs at gmail dot com>
 ;; URL: http://github.com/thisirs/vc-auto-commit.git
+;; Version: 0.1
 ;; Keywords: vc, convenience
 
 ;; This program is free software; you can redistribute it and/or modify
