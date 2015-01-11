@@ -55,17 +55,15 @@ is in a auto-committed repository.")
   (make-variable-buffer-local 'vc-auto-commit)
   (put 'vc-auto-commit 'safe-local-variable 'booleanp))
 
-(defun vc-auto-commit--responsible-backend (file)
-  "Return (ROOT . BACKEND) if file is under a version controlled system.
-If not, return nil."
-  (let ((backend (vc-backend file)))
-    (if backend
-        (condition-case err
-            (cons (vc-call-backend backend 'root file) backend)
-          (vc-not-supported
-           (unless (eq (cadr err) 'root)
-             (signal (car err) (cdr err)))
-           nil)))))
+(defun vc-auto-commit--responsible-backend (buffer)
+  "Return (ROOT . BACKEND) if the file visited by BUFFER is under
+a version controlled system. Otherwise, return nil."
+  (condition-case nil
+      (with-current-buffer buffer
+        (let ((backend (vc-deduce-backend)))
+          (if backend
+              (cons (vc-call-backend backend 'root default-directory) backend))))
+    (error)))
 
 (defun vc-auto-commit--get-repositories ()
   "Return repositories marked for auto-committing as a list of
@@ -119,17 +117,15 @@ nil."
   (interactive)
   (unless buffer
     (setq buffer (current-buffer)))
-  (let ((file (buffer-file-name buffer)))
-    (when file
-      (let ((backend (vc-auto-commit--responsible-backend file)))
-        (if (and backend
-                 (or
-                  (and (local-variable-p 'vc-auto-commit buffer)
-                       (buffer-local-value 'vc-auto-commit buffer))
-                  (member (abbreviate-file-name (car backend))
-                          (mapcar #'abbreviate-file-name
-                                  vc-auto-commit-repository))))
-            backend)))))
+  (let ((root+backend (vc-auto-commit--responsible-backend buffer)))
+    (if (and root+backend
+             (or
+              (and (local-variable-p 'vc-auto-commit buffer)
+                   (buffer-local-value 'vc-auto-commit buffer))
+              (member (abbreviate-file-name (car root+backend))
+                      (mapcar #'abbreviate-file-name
+                              vc-auto-commit-repository))))
+        root+backend)))
 
 ;;;###autoload
 (defun vc-auto-commit-activate (&optional arg)
