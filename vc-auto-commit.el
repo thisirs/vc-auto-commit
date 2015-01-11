@@ -73,9 +73,9 @@ conses of the form (ROOT . BACKEND) where ROOT is the path of a
 repository and BACKEND its backend."
   (let (result)
     (dolist (buffer (buffer-list) result)
-      (let ((backend (vc-auto-commit-backend buffer)))
-        (when (and backend (not (assoc (car backend) result)))
-          (push backend result))))
+      (let ((root+backend (vc-auto-commit-backend buffer)))
+        (when (and root+backend (not (assoc (car root+backend) result)))
+          (push root+backend result))))
     result))
 
 ;;;###autoload
