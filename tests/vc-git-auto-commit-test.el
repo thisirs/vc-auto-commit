@@ -60,20 +60,22 @@ the process."
   "Test if repository is marked as an auto-committed one."
   (with-delete-repository
    (let ((repo (with-empty-repository "check-local"
-                 (shell-command "touch blah")
+                 (shell-command "touch blah-local")
                  (with-temp-buffer
                    (princ '((nil (vc-auto-commit . t)))
                           (current-buffer))
                    (write-file ".dir-locals.el"))
-                 (find-file "blah"))))
+                 (find-file "blah-local"))))
+     (with-current-buffer "blah-local"
+       (should vc-auto-commit))
      (should (assoc repo (vc-auto-commit--get-repositories))))))
 
 (ert-deftest vc-auto-commit-is-auto-committed-global ()
   "Test if repository is marked as an auto-committed one."
   (with-delete-repository
    (let ((repo (with-empty-repository "check-global"
-                 (shell-command "touch blah")
-                 (find-file "blah"))))
+                 (shell-command "touch blah-global")
+                 (find-file "blah-global"))))
      (setq vc-auto-commit-repository nil)
      (should-not (vc-auto-commit--get-repositories))
      (setq vc-auto-commit-repository (list repo))
