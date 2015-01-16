@@ -67,6 +67,7 @@ the process."
                    (write-file ".dir-locals.el"))
                  (find-file "blah-local"))))
      (with-current-buffer "blah-local"
+       (should (local-variable-p 'vc-auto-commit))
        (should vc-auto-commit))
      (should (assoc repo (vc-auto-commit--get-repositories))))))
 
