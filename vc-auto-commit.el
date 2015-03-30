@@ -60,9 +60,9 @@ is in a auto-committed repository.")
 a version controlled system. Otherwise, return nil."
   (condition-case nil
       (with-current-buffer buffer
-        (let ((backend (vc-responsible-backend buffer-file-name)))
-          (if backend
-              (cons (vc-call-backend backend 'root default-directory) backend))))
+        (let* ((backend (vc-responsible-backend buffer-file-name))
+               (root (vc-call-backend backend 'root default-directory)))
+          (and backend root (cons root backend))))
     (error)))
 
 (defun vc-auto-commit--get-repositories ()
