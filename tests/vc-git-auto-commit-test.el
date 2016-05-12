@@ -27,6 +27,9 @@
 (defvar vc-auto-commit-test-repository-list ()
   "List of repositories used in the tests.")
 
+(defvar vc-auto-commit-test-debug t
+  "If non-nil, don't delete repositories for debugging purposes.")
+
 (defun vc-auto-commit-test-shell-commands (&rest commands)
   "Execute the set of COMMANDS with `shell-command'."
   (declare (indent nil))
@@ -49,12 +52,14 @@ created repository to allow easy cloning."
 (defmacro with-delete-repository (&rest body)
   "Execute BODY and delete all the repositories created during
 the process."
-  `(let (vc-auto-commit-test-repository-list)
-     (unwind-protect
-         (progn ,@body)
-       (mapc (lambda (dir)
-               (ignore-errors (delete-directory dir :recursive)))
-             vc-auto-commit-test-repository-list))))
+  (if vc-auto-commit-test-debug
+      `(progn ,@body)
+    `(let (vc-auto-commit-test-repository-list)
+       (unwind-protect
+           (progn ,@body)
+         (mapc (lambda (dir)
+                 (ignore-errors (delete-directory dir :recursive)))
+               vc-auto-commit-test-repository-list)))))
 
 (ert-deftest vc-auto-commit-is-auto-committed-local ()
   "Test if repository is marked as an auto-committed one."
