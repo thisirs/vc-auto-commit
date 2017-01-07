@@ -1,6 +1,6 @@
 ;;; vc-git-auto-commit.el --- Auto-commit feature for git
 
-;; Copyright (C) 2013-2016 Sylvain Rousseau
+;; Copyright (C) 2013-2017 Sylvain Rousseau
 
 ;; Author: Sylvain Rousseau <thisirs at gmail dot com>
 ;; Maintainer: Sylvain Rousseau <thisirs at gmail dot com>
