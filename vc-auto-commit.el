@@ -55,24 +55,31 @@ is in a auto-committed repository.")
   (make-variable-buffer-local 'vc-auto-commit)
   (put 'vc-auto-commit 'safe-local-variable 'booleanp))
 
+(defvar vc-auto-commit-cancel-hook nil
+  "Hook run by `vc-auto-commit--get-repositories', if any of the
+function returns non-nil, the auto-commit is canceled.")
+
 (defun vc-auto-commit--responsible-backend (buffer)
-  "Return (ROOT . BACKEND) if the file visited by BUFFER is under
-a version controlled system. Otherwise, return nil."
+  "Return (ROOT BACKEND) if the file visited by BUFFER is under a
+version controlled system. Otherwise, return nil."
   (condition-case nil
       (with-current-buffer buffer
         (let* ((backend (vc-responsible-backend buffer-file-name))
                (root (vc-call-backend backend 'root default-directory)))
-          (and backend root (cons root backend))))
+          (and backend root (list root backend))))
     (error)))
 
 (defun vc-auto-commit--get-repositories ()
   "Return repositories marked for auto-committing as a list of
-conses of the form (ROOT . BACKEND) where ROOT is the path of a
+conses of the form (ROOT BACKEND) where ROOT is the path of a
 repository and BACKEND its backend."
   (let (result)
     (dolist (buffer (buffer-list) result)
       (let ((root+backend (vc-auto-commit-backend buffer)))
-        (when (and root+backend (not (assoc (car root+backend) result)))
+        (when (and root+backend
+                   (not (assoc (car root+backend) result))
+                   (not (apply 'run-hook-with-args-until-success
+                               'vc-auto-commit-cancel-hook root+backend)))
           (push root+backend result))))
     result))
 
@@ -111,9 +118,8 @@ generate a commit message."
     (not repo)))
 
 (defun vc-auto-commit-backend (&optional buffer)
-  "Return (ROOT . BACKEND) if BUFFER is under a version
-controlled system and marked for auto-committing. If not, return
-nil."
+  "Return (ROOT BACKEND) if BUFFER is under a version controlled
+system and marked for auto-committing. If not, return nil."
   (interactive)
   (unless buffer
     (setq buffer (current-buffer)))
