@@ -64,9 +64,10 @@ function returns non-nil, the auto-commit is canceled.")
 version controlled system. Otherwise, return nil."
   (condition-case nil
       (with-current-buffer buffer
-        (let* ((backend (vc-responsible-backend buffer-file-name))
-               (root (vc-call-backend backend 'root default-directory)))
-          (and backend root (list root backend))))
+        (unless (file-remote-p buffer-file-name)
+          (let* ((backend (vc-responsible-backend buffer-file-name))
+                 (root (vc-call-backend backend 'root default-directory)))
+            (and backend root (list root backend)))))
     (error)))
 
 (defun vc-auto-commit--get-repositories ()
